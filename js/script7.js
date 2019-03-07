@@ -4,7 +4,7 @@ var board = document.getElementById('board');
 var new_note_btn = document.getElementById('newnote');
 
 
-var notesArr = [];
+var notesArr = JSON.parse(localStorage.getItem('sss')) || [];
 var dragNote;
 var dragObj;
 var deltaX;
@@ -48,8 +48,9 @@ function createOneNoteMarkup(item, index){
     textarea.value = item.text;
     textarea.onkeyup = function(){
         item.text = textarea.value;
+        localStorage.setItem ('sss', JSON.stringify(notesArr));
     }
-     
+
     
     return tempNote;
 };
@@ -83,8 +84,8 @@ function updateMarkup(){
         newNote.onmouseup = function(){
             document.removeEventListener('mousemove',getMouse); // убрать перетягивания
         }
-
         board.appendChild(newNote);
+    
     });
 
 };
@@ -92,8 +93,9 @@ function updateMarkup(){
 
 new_note_btn.onclick = function(e){
     notesArr.push(new Note());
+    localStorage.setItem ('sss', JSON.stringify(notesArr));
     updateMarkup();
 }
-
+updateMarkup();
 
 });
